@@ -46,15 +46,19 @@ def run_bot():
     async def play_next(ctx):
         # Nếu có bài hát trong hàng đợi
         if ctx.guild.id in queues and queues[ctx.guild.id]:
+            # Hủy timeout nếu có bài hát mới trong queue
+            if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
+                timeouts[ctx.guild.id].cancel()
+
             link = queues[ctx.guild.id].pop(0)
             await play(ctx, link=link)
         else:
-            # Đặt timeout ngắt kết nối sau 5 phút nếu không còn bài trong hàng đợi
+            # Đặt timeout ngắt kết nối sau 10 phút nếu không còn bài trong hàng đợi
             if ctx.guild.id in voice_clients:
                 timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
 
     async def disconnect_after_timeout(ctx):
-        await asyncio.sleep(600)  # Đợi 5 phút
+        await asyncio.sleep(600)  # Đợi 10 phút
         # Nếu không có bài mới trong hàng đợi, ngắt kết nối
         if ctx.guild.id in voice_clients and (ctx.guild.id not in queues or not queues[ctx.guild.id]):
             await voice_clients[ctx.guild.id].disconnect()
@@ -63,10 +67,12 @@ def run_bot():
     
     @client.command(name="play")
     async def play(ctx, *, link):
-        # Kiểm tra nếu bot chưa tham gia kênh thoại
+        # Kiểm tra nếu có timeout, hủy timeout khi có bài hát mới
         if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
             timeouts[ctx.guild.id].cancel()
+            print("huy timeout")
             
+        # Kiểm tra nếu bot chưa tham gia kênh thoại
         if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
             voice_client = await ctx.author.voice.channel.connect()
             voice_clients[ctx.guild.id] = voice_client
@@ -157,7 +163,8 @@ def run_bot():
             await ctx.send("<:Nijika:1296479260936241152>")
 
             # Chuyển sang bài tiếp theo trong queue nếu có
-            await play_next(ctx)
+            if ctx.guild.id in queues and queues[ctx.guild.id]:
+                await play_next(ctx)
         else:
             await ctx.send("Nhìn ta giống đang hát lắm à")
             await ctx.send("<:caideogitheOriginalversion:953853117802369136>")
