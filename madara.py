@@ -21,7 +21,7 @@ def run_bot():
     yt_dl_options = {"format": "bestaudio/best"}
     ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
-    ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+    ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn -filter:a "volume=0.5"'}
 
     @client.event
     async def on_ready():
@@ -33,7 +33,7 @@ def run_bot():
         if channel:
             await channel.send(
                 "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-                "**Madara Uchiha <:rinnegan:1305515674894073966>**\n"
+                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
                 "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
                 "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
                 "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
@@ -41,28 +41,32 @@ def run_bot():
                 "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
             )
 
-    async def play_next(ctx):
-        if queues[ctx.guild.id]:  # Kiểm tra nếu có bài trong queue
-            link = queues[ctx.guild.id].pop(0)
-            await play(ctx, link=link)  # Phát bài tiếp theo trong queue
-        else:
-            await voice_clients[ctx.guild.id].disconnect()  # Ngắt kết nối nếu hết queue
-            del voice_clients[ctx.guild.id]
+    timeouts = {}
 
-    
-    # @client.command(name="join")
-    # async def join(ctx):
-    #     # Kiểm tra xem người gọi lệnh có đang ở trong kênh thoại hay không
-    #     if ctx.author.voice:
-    #         channel = ctx.author.voice.channel  # Lấy kênh thoại mà người gọi lệnh đang ở
-    #         await channel.connect()  # Bot sẽ tham gia kênh thoại này
-    #         await ctx.send(f"Ta đã đến {channel.name} <:bangg:926294633640767488>")
-    #     else:
-    #         await ctx.send("Ai đã gọi ta, hãy vào kênh trước khi gọi <:fern_chiu_kho:1300984467363463309>")
+    async def play_next(ctx):
+        # Nếu có bài hát trong hàng đợi
+        if ctx.guild.id in queues and queues[ctx.guild.id]:
+            link = queues[ctx.guild.id].pop(0)
+            await play(ctx, link=link)
+        else:
+            # Đặt timeout ngắt kết nối sau 5 phút nếu không còn bài trong hàng đợi
+            if ctx.guild.id in voice_clients:
+                timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
+
+    async def disconnect_after_timeout(ctx):
+        await asyncio.sleep(600)  # Đợi 5 phút
+        # Nếu không có bài mới trong hàng đợi, ngắt kết nối
+        if ctx.guild.id in voice_clients and (ctx.guild.id not in queues or not queues[ctx.guild.id]):
+            await voice_clients[ctx.guild.id].disconnect()
+            del voice_clients[ctx.guild.id]
+            await ctx.send("Madara đã rời đi vì không còn gì để hát.")
     
     @client.command(name="play")
     async def play(ctx, *, link):
         # Kiểm tra nếu bot chưa tham gia kênh thoại
+        if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
+            timeouts[ctx.guild.id].cancel()
+            
         if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
             voice_client = await ctx.author.voice.channel.connect()
             voice_clients[ctx.guild.id] = voice_client
@@ -70,7 +74,8 @@ def run_bot():
             if ctx.guild.id not in queues:
                 queues[ctx.guild.id] = []
             queues[ctx.guild.id].append(link)
-            await ctx.send("Ok Madara sẽ hát bài này tiếp theo <:okgua:928320383503990804>")
+            await ctx.send("Ok Madara sẽ hát bài này tiếp theo")
+            await ctx.send("<:okgua:928320383503990804>")
             return
 
         # Phát nhạc ngay lập tức nếu không có bài nào đang phát
@@ -118,21 +123,23 @@ def run_bot():
 
     @client.command(name="stop")
     async def stop(ctx):
-        try:
-            # Kiểm tra xem bot có đang phát nhạc không và dừng nếu có
-            if ctx.guild.id in voice_clients:
-                # Nếu bot đang phát nhạc, dừng nó
-                if voice_clients[ctx.guild.id].is_playing():
-                    voice_clients[ctx.guild.id].stop()
+        # try:
+        #     # Kiểm tra xem bot có đang phát nhạc không và dừng nếu có
+        #     if ctx.guild.id in voice_clients:
+        #         # Nếu bot đang phát nhạc, dừng nó
+        #         if voice_clients[ctx.guild.id].is_playing():
+        #             voice_clients[ctx.guild.id].stop()
 
-                # Ngắt kết nối bot khỏi kênh thoại dù có phát nhạc hay không
-                await voice_clients[ctx.guild.id].disconnect()
-                del voice_clients[ctx.guild.id]
-                await ctx.send("Có không giữ, mất đừng tìm <:fern_chiu_kho:1300984467363463309>")
-            else:
-                await ctx.send("Ta có hát đâu mà dừng <:caideogitheOriginalversion:1305523285991231548>")
-        except Exception as e:
-            print(e)
+        #         # Ngắt kết nối bot khỏi kênh thoại dù có phát nhạc hay không
+        #         await voice_clients[ctx.guild.id].disconnect()
+        #         del voice_clients[ctx.guild.id]
+        #         await ctx.send("Có không giữ, mất đừng tìm <:fern_chiu_kho:1300984467363463309>")
+        #     else:
+        #         await ctx.send("Ta có hát đâu mà dừng <:caideogitheOriginalversion:1305523285991231548>")
+        # except Exception as e:
+        #     print(e)
+        await ctx.send("Ta đang luyện lại skill này, dùng .skip đi")
+        await ctx.send("<:fern_chiu_kho:1300984467363463309> <:Nijika:1296479260936241152>")
 
     @client.command(name="queue")
     async def queue(ctx, *, url):
@@ -143,14 +150,19 @@ def run_bot():
         
     @client.command(name="skip")
     async def skip(ctx):
-        # # Kiểm tra nếu có bài hát đang phát trong voice client của guild
-        # if ctx.guild.id in voice_clients and voice_clients[ctx.guild.id].is_playing():
-        #     voice_clients[ctx.guild.id].stop()  # Dừng bài hiện tại
-        #     await ctx.send("Không thích thì thôi, Madara sẽ hát bài khác :Nijika:")
-        #     await play_next(ctx)  # Chuyển sang bài tiếp theo trong queue
-        # else:
-        #     await ctx.send("No song is currently playing.")
-        await ctx.send("Thằng Obito nó vô hiệu skill này của ta khi Uế thổ chuyển sinh rồi <:Nijika:1296479260936241152>")
+        # Kiểm tra nếu có bài hát đang phát trong voice client của guild
+        if ctx.guild.id in voice_clients and voice_clients[ctx.guild.id].is_playing():
+            voice_clients[ctx.guild.id].stop()  # Dừng bài hiện tại
+            await ctx.send("Không thích thì thôi, Madara sẽ hát bài khác")
+            await ctx.send("<:Nijika:1296479260936241152>")
+
+            # Chuyển sang bài tiếp theo trong queue nếu có
+            await play_next(ctx)
+        else:
+            await ctx.send("Nhìn ta giống đang hát lắm à")
+            await ctx.send("<:caideogitheOriginalversion:953853117802369136>")
+
+        # await ctx.send("Thằng Obito nó vô hiệu skill này của ta khi Uế thổ chuyển sinh rồi <:Nijika:1296479260936241152>")
 
 
     client.run(TOKEN)
