@@ -6,6 +6,7 @@ import yt_dlp
 from dotenv import load_dotenv
 import urllib.parse, urllib.request, re
 import message_res
+from text_to_speech import speak
 
 def run_bot():
     load_dotenv()
@@ -31,16 +32,16 @@ def run_bot():
         channel_id = 875767652734365706  # Thay thế CHANNEL_ID bằng ID của kênh
         channel = client.get_channel(channel_id)
         
-        # if channel:
-        #     await channel.send(
-        #         "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-        #         "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-        #         "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-        #         "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-        #         "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
-        #         "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-        #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-        #     )
+        if channel:
+            await channel.send(
+                "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+                "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+                "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
+                "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+                "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+                "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+            )
 
     timeouts = {}
 
@@ -60,11 +61,13 @@ def run_bot():
 
     async def disconnect_after_timeout(ctx):
         await asyncio.sleep(600)  # Đợi 10 phút
-        # Nếu không có bài mới trong hàng đợi, ngắt kết nối
-        if ctx.guild.id in voice_clients and (ctx.guild.id not in queues or not queues[ctx.guild.id]):
-            await voice_clients[ctx.guild.id].disconnect()
-            del voice_clients[ctx.guild.id]
-            await ctx.send("Madara đã rời đi vì không còn gì để hát.")
+        # Kiểm tra số lượng người dùng trong kênh, nếu chỉ còn bot thì mới ngắt kết nối
+        voice_channel = ctx.guild.get_channel(voice_clients[ctx.guild.id].channel.id)
+        if voice_channel and len(voice_channel.members) == 1:  # Chỉ có bot
+            if ctx.guild.id in voice_clients and (ctx.guild.id not in queues or not queues[ctx.guild.id]):
+                await voice_clients[ctx.guild.id].disconnect()
+                del voice_clients[ctx.guild.id]
+                await ctx.send("Madara đã rời đi vì không còn gì để hát.")
     
     @client.command(name="play")
     async def play(ctx, *, link):
@@ -175,5 +178,9 @@ def run_bot():
     @client.event
     async def on_message(message):
         await message_res.on_message(client, message)
+        
+    @client.command(name="speak")
+    async def speak_command(ctx, *, text: str):
+        await speak(ctx, text=text)
 
     client.run(TOKEN)
