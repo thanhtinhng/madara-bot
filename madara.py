@@ -5,6 +5,7 @@ import asyncio
 import yt_dlp
 from dotenv import load_dotenv
 import urllib.parse, urllib.request, re
+import message_res
 
 def run_bot():
     load_dotenv()
@@ -22,7 +23,7 @@ def run_bot():
     ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
     ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn -filter:a "volume=0.5"'}
-
+    
     @client.event
     async def on_ready():
         print(f'{client.user} is now jamming')
@@ -30,16 +31,16 @@ def run_bot():
         channel_id = 875767652734365706  # Thay thế CHANNEL_ID bằng ID của kênh
         channel = client.get_channel(channel_id)
         
-        if channel:
-            await channel.send(
-                "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-                "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-                "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-                "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
-                "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-                "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-            )
+        # if channel:
+        #     await channel.send(
+        #         "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+        #         "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+        #         "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+        #         "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
+        #         "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+        #         "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+        #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+        #     )
 
     timeouts = {}
 
@@ -171,5 +172,8 @@ def run_bot():
 
         # await ctx.send("Thằng Obito nó vô hiệu skill này của ta khi Uế thổ chuyển sinh rồi <:Nijika:1296479260936241152>")
 
+    @client.event
+    async def on_message(message):
+        await message_res.on_message(client, message)
 
     client.run(TOKEN)
