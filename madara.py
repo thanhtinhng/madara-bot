@@ -133,23 +133,28 @@ def run_bot():
 
     @client.command(name="stop")
     async def stop(ctx):
-        # try:
-        #     # Kiểm tra xem bot có đang phát nhạc không và dừng nếu có
-        #     if ctx.guild.id in voice_clients:
-        #         # Nếu bot đang phát nhạc, dừng nó
-        #         if voice_clients[ctx.guild.id].is_playing():
-        #             voice_clients[ctx.guild.id].stop()
+        try:
+            # Kiểm tra xem bot có đang trong voice channel không
+            if ctx.guild.id in voice_clients:
+                # Xóa hàng đợi trước
+                if ctx.guild.id in queues:
+                    queues[ctx.guild.id].clear()
 
-        #         # Ngắt kết nối bot khỏi kênh thoại dù có phát nhạc hay không
-        #         await voice_clients[ctx.guild.id].disconnect()
-        #         del voice_clients[ctx.guild.id]
-        #         await ctx.send("Có không giữ, mất đừng tìm <:fern_chiu_kho:1300984467363463309>")
-        #     else:
-        #         await ctx.send("Ta có hát đâu mà dừng <:caideogitheOriginalversion:1305523285991231548>")
-        # except Exception as e:
-        #     print(e)
-        await ctx.send("Ta đang luyện lại skill này, dùng .skip đi")
-        await ctx.send("<:fern_chiu_kho:1300984467363463309> <:Nijika:1296479260936241152>")
+                # Nếu đang phát nhạc, dừng lại
+                if voice_clients[ctx.guild.id].is_playing():
+                    voice_clients[ctx.guild.id].stop()
+
+                # Ngắt kết nối bot khỏi kênh thoại
+                await voice_clients[ctx.guild.id].disconnect()
+                del voice_clients[ctx.guild.id]
+
+                await ctx.send("Madara đã dừng hát và rời khỏi kênh <:fern_chiu_kho:1300984467363463309>")
+            else:
+                await ctx.send("Ta có hát đâu mà dừng <:caideogitheOriginalversion:1307371239072862258>")
+        except Exception as e:
+            print(f"Lỗi khi dừng nhạc: {e}")
+        # await ctx.send("Ta đang luyện lại skill này, dùng .skip đi")
+        # await ctx.send("<:fern_chiu_kho:1300984467363463309> <:Nijika:1296479260936241152>")
 
     @client.command(name="queue")
     async def queue(ctx, *, url):
