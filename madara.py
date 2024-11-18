@@ -184,7 +184,7 @@ def run_bot():
     async def on_message(message):
         await message_res.on_message(client, message)
         
-    @client.command(name="speak")
+    @client.command(name="sp")
     async def speak_command(ctx, *, text: str):
         await speak(ctx, text=text)
 
