@@ -14,13 +14,19 @@ def run_bot():
     intents = discord.Intents.default()
     intents.message_content = True
     client = commands.Bot(command_prefix=".", intents=intents)
+    
+    # yt_dl_options = {
+    # "format": "bestaudio/best",
+    # "cookiefile": "./cookie/www.youtube.com_cookies.txt",  # Đường dẫn tới file cookies.txt
+    # "quiet": True
+    # }
 
     queues = {}
     voice_clients = {}
     youtube_base_url = 'https://www.youtube.com/'
     youtube_results_url = youtube_base_url + 'results?'
     youtube_watch_url = youtube_base_url + 'watch?v='
-    yt_dl_options = {"format": "bestaudio/best"}
+    yt_dl_options = {"format": "bestaudio/best", "age_limit": 0,}
     ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
     ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn -filter:a "volume=0.5"'}
@@ -32,16 +38,16 @@ def run_bot():
         channel_id = 875767652734365706  # Thay thế CHANNEL_ID bằng ID của kênh
         channel = client.get_channel(channel_id)
         
-        if channel:
-            await channel.send(
-                "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-                "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-                "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-                "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
-                "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-                "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-            )
+        # if channel:
+        #     await channel.send(
+        #         "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+        #         "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+        #         "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+        #         "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
+        #         "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+        #         "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+        #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+        #     )
 
     timeouts = {}
 
