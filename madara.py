@@ -13,7 +13,7 @@ def run_bot():
     TOKEN = os.getenv('discord_token')
     intents = discord.Intents.default()
     intents.message_content = True
-    client = commands.Bot(command_prefix=".", intents=intents)
+    client = commands.Bot(command_prefix=";", intents=intents)
     
     # yt_dl_options = {
     # "format": "bestaudio/best",
@@ -38,16 +38,16 @@ def run_bot():
         channel_id = 875767652734365706  # Thay thế CHANNEL_ID bằng ID của kênh
         channel = client.get_channel(channel_id)
         
-        # if channel:
-        #     await channel.send(
-        #         "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-        #         "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-        #         "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-        #         "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-        #         "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
-        #         "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-        #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-        #     )
+        if channel:
+            await channel.send(
+                "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+                "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+                "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
+                "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+                "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+                "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+            )
 
     timeouts = {}
 
@@ -190,7 +190,7 @@ def run_bot():
     async def on_message(message):
         await message_res.on_message(client, message)
         
-    @client.command(name="sp")
+    @client.command(name="s")
     async def speak_command(ctx, *, text: str):
         await speak(ctx, text=text)
 
