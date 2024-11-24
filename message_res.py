@@ -1,4 +1,5 @@
 # event_handler.py
+import discord
 
 async def on_message(client, message):
     # Kiểm tra nếu người gửi là bot, bỏ qua tin nhắn để tránh vòng lặp
@@ -21,6 +22,10 @@ async def on_message(client, message):
         
     if "Hoàng" in message.content or "hoàng" in message.content:
         await message.channel.send(f"Anh này bị quỵt 100k {hoang.mention}")
+        
+        
+    if "noel" in message.content or "Noel" in message.content or "giáng sinh" in message.content or "Giáng sinh" in message.content or "padoru" in message.content or "Padoru" in message.content:
+        await message.channel.send(file=discord.File('./img/padoru.jpg'))
 
     # Đảm bảo rằng các lệnh bot khác vẫn hoạt động bằng cách xử lý tin nhắn với process_commands
     await client.process_commands(message)
