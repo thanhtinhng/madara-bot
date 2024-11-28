@@ -138,13 +138,13 @@ def run_bot():
         except Exception as e:
             print(e)
 
-    @client.command(name="clear_queue")
-    async def clear_queue(ctx):
-        if ctx.guild.id in queues:
-            queues[ctx.guild.id].clear()
-            await ctx.send("Queue cleared!")
-        else:
-            await ctx.send("There is no queue to clear")
+    # @client.command(name="clear_queue")
+    # async def clear_queue(ctx):
+    #     if ctx.guild.id in queues:
+    #         queues[ctx.guild.id].clear()
+    #         await ctx.send("Queue cleared!")
+    #     else:
+    #         await ctx.send("There is no queue to clear")
 
     @client.command(name="pause")
     async def pause(ctx):
@@ -187,12 +187,12 @@ def run_bot():
         # await ctx.send("Ta đang luyện lại skill này, dùng .skip đi")
         # await ctx.send("<:fern_chiu_kho:1300984467363463309> <:Nijika:1296479260936241152>")
 
-    @client.command(name="queue")
-    async def queue(ctx, *, url):
-        if ctx.guild.id not in queues:
-            queues[ctx.guild.id] = []
-        queues[ctx.guild.id].append(url)
-        await ctx.send("Ok Madara sẽ hát bài này tiếp theo :3")
+    # @client.command(name="queue")
+    # async def queue(ctx, *, url):
+    #     if ctx.guild.id not in queues:
+    #         queues[ctx.guild.id] = []
+    #     queues[ctx.guild.id].append(url)
+    #     await ctx.send("Ok Madara sẽ hát bài này tiếp theo :3")
         
     @client.command(name="skip")
     async def skip(ctx):
