@@ -23,9 +23,14 @@ async def on_message(client, message):
     if "Hoàng" in message.content or "hoàng" in message.content:
         await message.channel.send(f"Anh này bị quỵt 100k {hoang.mention}")
         
-        
     if "noel" in message.content or "Noel" in message.content or "giáng sinh" in message.content or "Giáng sinh" in message.content or "padoru" in message.content or "Padoru" in message.content:
         await message.channel.send(file=discord.File('./img/padoru.jpg'))
+        
+    if "tanjiro" in message.content or "Tanjiro" in message.content or "tân" in message.content or "Tân" in message.content:
+        await message.channel.send("Là kẻ nào. Ta muốn tỉ thí với Tanjiro <:caideogitheOriginalversion:953853117802369136>")
 
+    if "mu" in message.content or "Mu" in message.content or "MU" in message.content:
+        await message.channel.send("BÃI RÁC MU")
+        await message.channel.send(file=discord.File('./img/mu.png'))
     # Đảm bảo rằng các lệnh bot khác vẫn hoạt động bằng cách xử lý tin nhắn với process_commands
     await client.process_commands(message)
