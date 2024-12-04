@@ -88,6 +88,7 @@ def run_bot():
         else:
             # Đặt timeout ngắt kết nối sau 10 phút nếu không còn bài trong hàng đợi
             if ctx.guild.id in voice_clients:
+                await ctx.send("Không còn bài hát nào nữa, ta sẽ rời đi trong 10 phút <:fern_chiu_kho:1300984467363463309>")
                 timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
 
     async def disconnect_after_timeout(ctx):
@@ -105,7 +106,7 @@ def run_bot():
         # Kiểm tra nếu có timeout, hủy timeout khi có bài hát mới
         if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
             timeouts[ctx.guild.id].cancel()
-            print("huy timeout")
+            await ctx.send("Hừm, có bài hát mới à? Ta sẽ ở lại thêm chút nữa <:fern_khinh_bi:1300983783016759387>")
             
         # Kiểm tra nếu bot chưa tham gia kênh thoại
         if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
