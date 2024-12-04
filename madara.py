@@ -39,39 +39,39 @@ def run_bot():
         # channel_id = 956401655040057344
         channel = client.get_channel(channel_id)
         
-        if channel:
-            await channel.send(
-                "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-                "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-                "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-                "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-                "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
-                "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-                "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-            )
+        # if channel:
+        #     await channel.send(
+        #         "*Uchiha Obito thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+        #         "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+        #         "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+        #         "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
+        #         "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+        #         "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+        #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+        #     )
         
-        if channel:
-            image_path = './img/xmas.jpg'
+        # if channel:
+        #     image_path = './img/xmas.jpg'
             
-            await channel.send(
-                "Ta, Uchiha Madara, nay không chỉ mang bóng tối và sức mạnh... mà còn mang đến sự khiếp sợ đêm Giáng Sinh!\n "
-                "Thứ các ngươi đang thấy không chỉ là tuyết :snowflake: mà là dấu hiệu cho sự thống trị của ta trong mùa lễ này. <:rinnegan:1305515674894073966>\n\n"
-                "*Chiếc mũ đỏ trên đầu cùng với ánh mắt Rinnegan sáng lên đầy uy lực :fire:*\n"
-                "Đừng tưởng rằng cây thông này chỉ để trang trí 🎄... Một khi ta vung nó, cả thế giới sẽ cảm nhận được sức mạnh của Uchiha! \n\n"
-                "Đêm nay, các ngươi không nhận quà... mà là nhận một bài học:\n\n"
-                "**Kẻ mạnh không cần đợi ông già Noel.** \n**Kẻ mạnh tự lấy quà của mình.**\n"
-            )
+        #     await channel.send(
+        #         "Ta, Uchiha Madara, nay không chỉ mang bóng tối và sức mạnh... mà còn mang đến sự khiếp sợ đêm Giáng Sinh!\n "
+        #         "Thứ các ngươi đang thấy không chỉ là tuyết :snowflake: mà là dấu hiệu cho sự thống trị của ta trong mùa lễ này. <:rinnegan:1305515674894073966>\n\n"
+        #         "*Chiếc mũ đỏ trên đầu cùng với ánh mắt Rinnegan sáng lên đầy uy lực :fire:*\n"
+        #         "Đừng tưởng rằng cây thông này chỉ để trang trí 🎄... Một khi ta vung nó, cả thế giới sẽ cảm nhận được sức mạnh của Uchiha! \n\n"
+        #         "Đêm nay, các ngươi không nhận quà... mà là nhận một bài học:\n\n"
+        #         "**Kẻ mạnh không cần đợi ông già Noel.** \n**Kẻ mạnh tự lấy quà của mình.**\n"
+        #     )
             
-            await channel.send(
-                "<:mayloicaij:928320367255236658>\n\n"
-            )
+        #     await channel.send(
+        #         "<:mayloicaij:928320367255236658>\n\n"
+        #     )
             
-            await channel.send(
-                "*Madara bước đi, tuyết bay theo từng bước chân:*\n"
-                "Chuẩn bị đi... Giáng Sinh năm nay sẽ không còn vui nữa đâu, "
-                "vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới. 🎅\n",
-                file=discord.File(image_path)
-            )
+        #     await channel.send(
+        #         "*Madara bước đi, tuyết bay theo từng bước chân:*\n"
+        #         "Chuẩn bị đi... Giáng Sinh năm nay sẽ không còn vui nữa đâu, "
+        #         "vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới. 🎅\n",
+        #         file=discord.File(image_path)
+        #     )
 
 
     timeouts = {}
@@ -133,7 +133,13 @@ def run_bot():
             player = discord.FFmpegOpusAudio(song, **ffmpeg_options)
 
             # Phát bài và gọi `play_next` khi bài kết thúc
-            voice_clients[ctx.guild.id].play(player, after=lambda e: asyncio.run_coroutine_threadsafe(play_next(ctx), client.loop))
+            voice_clients[ctx.guild.id].play(
+                player, 
+                after=lambda e: asyncio.run_coroutine_threadsafe(
+                    play_next(ctx), 
+                    client.loop
+                ) if e is None else print(f'Player error: {e}' if e else '')
+            )
             await ctx.send(f"Madara bắt đầu hát: {data['title']} <:oooo:926061449116258314>")  # Gửi tin nhắn bài hát hiện tại
         except Exception as e:
             print(e)
@@ -150,7 +156,7 @@ def run_bot():
     async def pause(ctx):
         try:
             voice_clients[ctx.guild.id].pause()
-            await ctx.send("To gan, ta đang hát mà ngươi dám làm phiền <:fern_chiu_kho:1300984467363463309>")
+            await ctx.send("To gan, ta đang hát mà ngươi dm làm phiền <:fern_chiu_kho:1300984467363463309>")
         except Exception as e:
             print(e)
 
@@ -201,15 +207,9 @@ def run_bot():
             voice_clients[ctx.guild.id].stop()  # Dừng bài hiện tại
             await ctx.send("Không thích thì thôi, Madara sẽ hát bài khác")
             await ctx.send("<:Nijika:1296479260936241152>")
-
-            # Chuyển sang bài tiếp theo trong queue nếu có
-            if ctx.guild.id in queues and queues[ctx.guild.id]:
-                await play_next(ctx)
         else:
             await ctx.send("Nhìn ta giống đang hát lắm à")
             await ctx.send("<:caideogitheOriginalversion:953853117802369136>")
-
-        # await ctx.send("Thằng Obito nó vô hiệu skill này của ta khi Uế thổ chuyển sinh rồi <:Nijika:1296479260936241152>")
 
     @client.event
     async def on_message(message):
