@@ -88,7 +88,8 @@ def run_bot():
         else:
             # Đặt timeout ngắt kết nối sau 10 phút nếu không còn bài trong hàng đợi
             if ctx.guild.id in voice_clients:
-                await ctx.send("Không còn bài hát nào nữa, ta sẽ rời đi trong 10 phút <:fern_chiu_kho:1300984467363463309>")
+                await ctx.send("Không còn bài hát nào nữa, ta sẽ rời đi trong 10 phút")
+                await ctx.send("<:fern_chiu_kho:1300984467363463309>")
                 timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
 
     async def disconnect_after_timeout(ctx):
@@ -106,7 +107,8 @@ def run_bot():
         # Kiểm tra nếu có timeout, hủy timeout khi có bài hát mới
         if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
             timeouts[ctx.guild.id].cancel()
-            await ctx.send("Hừm, có bài hát mới à? Ta sẽ ở lại thêm chút nữa <:fern_khinh_bi:1300983783016759387>")
+            await ctx.send("Hừm, có bài hát mới à? Ta sẽ ở lại thêm chút nữa")
+            await ctx.send("<:fern_khinh_bi:1300983783016759387>")
             
         # Kiểm tra nếu bot chưa tham gia kênh thoại
         if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
@@ -194,20 +196,51 @@ def run_bot():
         # await ctx.send("Ta đang luyện lại skill này, dùng .skip đi")
         # await ctx.send("<:fern_chiu_kho:1300984467363463309> <:Nijika:1296479260936241152>")
 
-    # @client.command(name="queue")
-    # async def queue(ctx, *, url):
-    #     if ctx.guild.id not in queues:
-    #         queues[ctx.guild.id] = []
-    #     queues[ctx.guild.id].append(url)
-    #     await ctx.send("Ok Madara sẽ hát bài này tiếp theo :3")
+    @client.command(name="queue")
+    async def show_queue(ctx):
+        try:
+            if ctx.guild.id not in queues or not queues[ctx.guild.id]:
+                await ctx.send("Không có bài hát nào trong hàng đợi <:caideogitheOriginalversion:953853117802369136>")
+                return
+                
+            queue_list = queues[ctx.guild.id]
+            message = "**Danh sách bài hát trong hàng đợi:**\n"
+            
+            for i, url in enumerate(queue_list, 1):
+                try:
+                    # Lấy thông tin bài hát từ URL hoặc từ khóa tìm kiếm
+                    if youtube_base_url not in url:
+                        query_string = urllib.parse.urlencode({'search_query': url})
+                        content = urllib.request.urlopen(youtube_results_url + query_string)
+                        search_results = re.findall(r'/watch\?v=(.{11})', content.read().decode())
+                        if search_results:
+                            url = youtube_watch_url + search_results[0]
+                    
+                    loop = asyncio.get_event_loop()
+                    data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=False))
+                    title = data.get('title', 'Unknown Title')
+                    message += f"{i}. {title}\n"
+                except Exception as e:
+                    message += f"{i}. {url}\n"
+                    print(f"Lỗi khi lấy thông tin bài hát trong queue: {e}")
+                    
+            await ctx.send(message)
+            
+        except Exception as e:
+            await ctx.send("Có lỗi khi hiển thị hàng đợi")
+            print(f"Lỗi queue: {e}")
         
     @client.command(name="skip")
     async def skip(ctx):
         # Kiểm tra nếu có bài hát đang phát trong voice client của guild
         if ctx.guild.id in voice_clients and voice_clients[ctx.guild.id].is_playing():
+            # Kiểm tra xem có phải bài cuối cùng không
+            is_last_song = ctx.guild.id not in queues or not queues[ctx.guild.id]
+            
             voice_clients[ctx.guild.id].stop()  # Dừng bài hiện tại
-            await ctx.send("Không thích thì thôi, Madara sẽ hát bài khác")
-            await ctx.send("<:Nijika:1296479260936241152>")
+            if not is_last_song:
+                await ctx.send("Không thích thì thôi, Madara sẽ hát bài khác")
+                await ctx.send("<:Nijika:1296479260936241152>")
         else:
             await ctx.send("Nhìn ta giống đang hát lắm à")
             await ctx.send("<:caideogitheOriginalversion:953853117802369136>")
