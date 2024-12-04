@@ -3,7 +3,7 @@ import discord
 
 async def on_message(client, message):
     # Kiểm tra nếu người gửi là bot, bỏ qua tin nhắn để tránh vòng lặp
-    if message.author == client.user:
+    if message.author == client.user or message.author.id == 971398628679749722:
         return
 
     hoang_id = 486732565689008129
