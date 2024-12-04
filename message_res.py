@@ -11,29 +11,28 @@ async def on_message(client, message):
     hoang = await client.fetch_user(hoang_id)
     chau = await client.fetch_user(chau_id)
     
-    # Chuyển nội dung tin nhắn thành list các từ để kiểm tra từ đứng riêng
-    words = message.content.lower().split()
+    # Chuyển nội dung tin nhắn thành chữ thường để kiểm tra
+    message_lower = message.content.lower()
+    words = message_lower.split()
     
-    # Tạo phản hồi cho các từ khóa cụ thể
-    if "madara" in words or "Madara" in words:
+    if "madara" in message_lower:
         await message.channel.send("Là ai đã gọi ta")
         await message.channel.send("<:caideogitheOriginalversion:953853117802369136>")
 
-    if "Chú Nghé" in words or "chú nghé" in words or "Chú nghé" in words:
+    if "chú nghé" in message_lower:
         await message.channel.send(f"Kẻ vượt qua 500 ứng cử viên để có thể đặt chân vào hàng ngũ tình nguyện donate {chau.mention}")
         await message.channel.send("<:HiRoSiMa:924292773140639755>")
         
-    if "Hoàng" in words or "hoàng" in words:
+    if "hoàng" in message_lower:
         await message.channel.send(f"Anh này bị quỵt 100k {hoang.mention}")
         
-    if "noel" in words or "Noel" in words or "giáng sinh" in words or "Giáng sinh" in words or "padoru" in words or "Padoru" in words:
+    if any(word in message_lower for word in ["noel", "giáng sinh", "padoru"]):
         await message.channel.send(file=discord.File('./img/padoru.jpg'))
         
-    if "tanjiro" in words or "Tanjiro" in words or "tân" in words or "Tân" in words:
-        await message.channel.send("Là kẻ nào. Ta muốn tỉ thí với Tanjiro <:caideogitheOriginalversion:953853117802369136>")
+    if any(word in message_lower for word in ["tanjiro", "tân", "tânjiro"]):
+        await message.channel.send("Tânjiro Là kẻ nào. Ta muốn tỉ thí với Tânjiro <:caideogitheOriginalversion:953853117802369136>")
 
-    # Kiểm tra từ "mu" đứng riêng
-    if "mu" in words or "MU" in words or "Mu" in words:
+    if "mu" in words:  # Check if "mu" is a standalone word
         await message.channel.send("BÃI RÁC MU")
         await message.channel.send(file=discord.File('./img/mu.png'))
 
