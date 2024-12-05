@@ -26,8 +26,11 @@ async def on_message(client, message):
     if "hoàng" in message_lower:
         await message.channel.send(f"Anh này bị quỵt 100k {hoang.mention}")
         
-    if any(word in message_lower for word in ["noel", "giáng sinh", "padoru"]):
+    if any(word in message_lower for word in ["padoru"]):
         await message.channel.send(file=discord.File('./img/padoru.jpg'))
+        
+    if any(word in message_lower for word in ["noel", "giáng sinh"]):
+        await message.channel.send(file=discord.File('./img/sau.gif'))
         
     if any(word in message_lower for word in ["tanjiro", "tân", "tânjiro"]):
         await message.channel.send("Tânjiro Là kẻ nào. Ta muốn tỉ thí với Tânjiro <:caideogitheOriginalversion:953853117802369136>")
