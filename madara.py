@@ -50,28 +50,28 @@ def run_bot():
         #         "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
         #     )
         
-        # if channel:
-        #     image_path = './img/xmas.jpg'
+        if channel:
+            image_path = './img/xmas.jpg'
             
-        #     await channel.send(
-        #         "Ta, Uchiha Madara, nay không chỉ mang bóng tối và sức mạnh... mà còn mang đến sự khiếp sợ đêm Giáng Sinh!\n "
-        #         "Thứ các ngươi đang thấy không chỉ là tuyết :snowflake: mà là dấu hiệu cho sự thống trị của ta trong mùa lễ này. <:rinnegan:1305515674894073966>\n\n"
-        #         "*Chiếc mũ đỏ trên đầu cùng với ánh mắt Rinnegan sáng lên đầy uy lực :fire:*\n"
-        #         "Đừng tưởng rằng cây thông này chỉ để trang trí 🎄... Một khi ta vung nó, cả thế giới sẽ cảm nhận được sức mạnh của Uchiha! \n\n"
-        #         "Đêm nay, các ngươi không nhận quà... mà là nhận một bài học:\n\n"
-        #         "**Kẻ mạnh không cần đợi ông già Noel.** \n**Kẻ mạnh tự lấy quà của mình.**\n"
-        #     )
+            await channel.send(
+                "Ta, Uchiha Madara, nay không chỉ mang bóng tối và sức mạnh... mà còn mang đến sự khiếp sợ đêm Giáng Sinh!\n "
+                "Thứ các ngươi đang thấy không chỉ là tuyết :snowflake: mà là dấu hiệu cho sự thống trị của ta trong mùa lễ này. <:rinnegan:1305515674894073966>\n\n"
+                "*Chiếc mũ đỏ trên đầu cùng với ánh mắt Rinnegan sáng lên đầy uy lực :fire:*\n"
+                "Đừng tưởng rằng cây thông này chỉ để trang trí 🎄... Một khi ta vung nó, cả thế giới sẽ cảm nhận được sức mạnh của Uchiha! \n\n"
+                "Đêm nay, các ngươi không nhận quà... mà là nhận một bài học:\n\n"
+                "**Kẻ mạnh không cần đợi ông già Noel.** \n**Kẻ mạnh tự lấy quà của mình.**\n"
+            )
             
-        #     await channel.send(
-        #         "<:mayloicaij:928320367255236658>\n\n"
-        #     )
+            await channel.send(
+                "<:mayloicaij:928320367255236658>\n\n"
+            )
             
-        #     await channel.send(
-        #         "*Madara bước đi, tuyết bay theo từng bước chân:*\n"
-        #         "Chuẩn bị đi... Giáng Sinh năm nay sẽ không còn vui nữa đâu, "
-        #         "vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới. 🎅\n",
-        #         file=discord.File(image_path)
-        #     )
+            await channel.send(
+                "*Madara bước đi, tuyết bay theo từng bước chân:*\n"
+                "Chuẩn bị đi... Giáng Sinh năm nay sẽ không còn vui nữa đâu, "
+                "vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới. 🎅\n",
+                file=discord.File(image_path)
+            )
 
 
     timeouts = {}
@@ -159,7 +159,7 @@ def run_bot():
     async def pause(ctx):
         try:
             voice_clients[ctx.guild.id].pause()
-            await ctx.send("To gan, ta đang hát mà ngươi dm làm phiền <:fern_chiu_kho:1300984467363463309>")
+            await ctx.send("To gan, ta đang hát mà ngươi dám làm phiền <:fern_chiu_kho:1300984467363463309>")
         except Exception as e:
             print(e)
 
