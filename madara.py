@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import os
 from dotenv import load_dotenv
-import urllib.parse, urllib.request, re
+# import urllib.parse, urllib.request, re
 import message_res
 from text_to_speech import speak
 import music_player
