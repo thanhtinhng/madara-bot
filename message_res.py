@@ -15,24 +15,24 @@ async def on_message(client, message):
     message_lower = message.content.lower()
     words = message_lower.split()
     
-    if "madara" in message_lower:
+    if "madara" in words:
         await message.channel.send("Là ai đã gọi ta")
         await message.channel.send("<:caideogitheOriginalversion:953853117802369136>")
 
-    if "chú nghé" in message_lower:
+    if "chú nghé" in words:
         await message.channel.send(f"Kẻ vượt qua 500 ứng cử viên để có thể đặt chân vào hàng ngũ tình nguyện donate {chau.mention}")
         await message.channel.send("<:HiRoSiMa:924292773140639755>")
         
-    if "hoàng" in message_lower:
+    if "hoàng" in words:
         await message.channel.send(f"Anh này bị quỵt 100k {hoang.mention}")
         
-    if any(word in message_lower for word in ["padoru"]):
+    if any(word in words for word in ["padoru"]):
         await message.channel.send(file=discord.File('./img/padoru.jpg'))
         
-    if any(word in message_lower for word in ["noel", "giáng sinh"]):
+    if any(word in words for word in ["noel", "giáng sinh"]):
         await message.channel.send(file=discord.File('./img/sau.gif'))
         
-    if any(word in message_lower for word in ["tanjiro", "tân", "tânjiro"]):
+    if any(word in words for word in ["tanjiro", "tân", "tânjiro"]):
         await message.channel.send("Tânjiro Là kẻ nào. Ta muốn tỉ thí với Tânjiro <:caideogitheOriginalversion:953853117802369136>")
 
     if "mu" in words:  # Check if "mu" is a standalone word

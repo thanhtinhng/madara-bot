@@ -44,6 +44,10 @@ def run_bot():
     async def skip_command(ctx):
         await music_player.skip(ctx)
 
+    @client.command(name="join")
+    async def join_command(ctx):
+        await music_player.join(ctx)
+
     @client.event
     async def on_message(message):
         await message_res.on_message(client, message)
