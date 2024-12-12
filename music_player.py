@@ -188,3 +188,17 @@ async def skip(ctx):
     else:
         await ctx.send("Nhìn ta giống đang hát lắm à")
         await ctx.send("<:caideogitheOriginalversion:953853117802369136>")
+
+async def join(ctx):
+    # Kiểm tra xem người dùng có đang ở trong kênh thoại không
+    if ctx.author.voice:
+        voice_channel = ctx.author.voice.channel
+        # Kiểm tra xem bot đã tham gia kênh chưa
+        if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
+            voice_client = await voice_channel.connect()
+            voice_clients[ctx.guild.id] = voice_client
+            await ctx.send(f"Madara đã vào kênh {voice_channel.name} và đang chờ lệnh phát nhạc.")
+        else:
+            await ctx.send("Madara đã ở trong kênh thoại rồi!")
+    else:
+        await ctx.send("Ngươi phải vào một kênh thoại trước khi ta có thể tham gia.")
