@@ -59,16 +59,20 @@ Tạo một file `.env` trong thư mục chính của project với nội dung:
 discord_token=YOUR_DISCORD_BOT_TOKEN
 tenor_api_key=YOUR_TENOR_API_KEY
 ```
-### 3. Đăng ký API Key cho Tenor
+
+### 3. Đăng ký API Key cho Discord
+Truy cập [Discord Dev](https://discord.com/developers/applications) để đăng ký tài khoản và lấy API Key.
+
+### 4. Đăng ký API Key cho Tenor (Chức năng GIF)
 Truy cập [Tenor API](https://developers.google.com/tenor/guides/quickstart) để đăng ký tài khoản và lấy API Key.
 
-### 4. Chạy bot
+### 5. Chạy bot
 ```bash
 Copy code
 python bot.py
 ```
 
-### 5. Sử dụng bot
+### 6. Sử dụng bot
 Khi bot đã online trên server Discord của bạn, sử dụng các lệnh với prefix ;
 
 #### Ví dụ:
