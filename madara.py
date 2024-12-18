@@ -8,13 +8,14 @@ from text_to_speech import speak
 import music_player
 import welcome_message
 from media_search import search_and_send_gif
+from help_command import send_help_message
 
 def run_bot():
     load_dotenv()
     TOKEN = os.getenv('discord_token')
     intents = discord.Intents.default()
     intents.message_content = True
-    client = commands.Bot(command_prefix=";", intents=intents)
+    client = commands.Bot(command_prefix=";", intents=intents, help_command=None)
     music_player.set_client(client)
     
     # @client.event
@@ -60,5 +61,9 @@ def run_bot():
     @client.command(name="gif", aliases=["g"])
     async def img_command(ctx, *, query: str):
         await search_and_send_gif(ctx, query)
+        
+    @client.command(name="help", aliases=["h"])
+    async def help_command(ctx):
+        await send_help_message(ctx)
 
     client.run(TOKEN)

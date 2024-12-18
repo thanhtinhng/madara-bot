@@ -12,7 +12,7 @@ async def search_and_send_gif(ctx, query):
     try:
         
         TENOR_API_KEY = os.getenv('tenor_api_key')
-        TENOR_API_URL = f"https://tenor.googleapis.com/v2/search?q={finalQuery}&key={TENOR_API_KEY}&limit=20"
+        TENOR_API_URL = f"https://tenor.googleapis.com/v2/search?q={finalQuery}&key={TENOR_API_KEY}&limit=10"
         
         response = requests.get(TENOR_API_URL)
         if response.status_code == 200:
