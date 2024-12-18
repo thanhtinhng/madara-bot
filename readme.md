@@ -5,7 +5,7 @@
 Đây là một bot Discord đa năng được xây dựng bằng Python, cung cấp các tính năng:
 - **Phát nhạc từ YouTube**.
 - **Tìm kiếm và gửi GIF** dựa trên từ khóa.
-- **Chuyển đổi văn bản thành giọng nói**.
+- **Đọc văn bản**.
 - **Tự động phản hồi tin nhắn dựa trên từ khóa**.
 
 ---
@@ -21,7 +21,7 @@
 - `;resume` hoặc `;r`: Tiếp tục phát nhạc đã tạm dừng.
 - `;join`: Mời bot tham gia kênh thoại.
 
-### 🔊 **Chuyển văn bản thành giọng nói**
+### 🔊 **Đọc văn bản**
 - `;s`: Bot đọc to văn bản mà bạn cung cấp trong kênh thoại.
 
 ### 🖼️ **GIF**
@@ -60,16 +60,17 @@ discord_token=YOUR_DISCORD_BOT_TOKEN
 tenor_api_key=YOUR_TENOR_API_KEY
 ```
 ### 3. Đăng ký API Key cho Tenor
-Truy cập Tenor API để đăng ký tài khoản và lấy API Key.
+Truy cập [Tenor API](https://developers.google.com/tenor/guides/quickstart) để đăng ký tài khoản và lấy API Key.
 
 ### 4. Chạy bot
-bash
+```bash
 Copy code
 python bot.py
+```
 
 ### 5. Sử dụng bot
 Khi bot đã online trên server Discord của bạn, sử dụng các lệnh với prefix ;
 
 #### Ví dụ:
-;play Never Gonna Give You Up: Phát nhạc từ YouTube.
+;play Never Gonna Give You Up: Phát nhạc từ YouTube.  
 ;gif happy: Tìm kiếm và gửi một GIF liên quan đến từ "happy".
