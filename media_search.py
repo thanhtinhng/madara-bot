@@ -4,15 +4,24 @@ import random
 
 async def search_and_send_gif(ctx, query):
     """
-    Tìm kiếm GIF từ Tenor API, lấy 30 kết quả và gửi ngẫu nhiên một GIF vào Discord
+    Tìm kiếm GIF từ Tenor API, tùy thuộc vào độ dài từ khóa, và gửi ngẫu nhiên một GIF vào Discord.
     """
-    
     finalQuery = "anime" + " " + query
-    
     try:
-        
+        # Xác định số lượng GIF cần lấy dựa trên số từ trong từ khóa
+        num_words = len(query.split())
+        if num_words == 2:
+            limit = 13
+        elif num_words == 3:
+            limit = 6
+        elif num_words >= 4:
+            limit = 4
+        else:
+            limit = 10  # Mặc định khi từ khóa không đủ điều kiện
+
+        # API URL với số lượng GIF lấy về dựa trên `limit`
         TENOR_API_KEY = os.getenv('tenor_api_key')
-        TENOR_API_URL = f"https://tenor.googleapis.com/v2/search?q={finalQuery}&key={TENOR_API_KEY}&limit=10"
+        TENOR_API_URL = f"https://tenor.googleapis.com/v2/search?q={finalQuery}&key={TENOR_API_KEY}&limit={limit}"
         
         response = requests.get(TENOR_API_URL)
         if response.status_code == 200:
@@ -27,8 +36,8 @@ async def search_and_send_gif(ctx, query):
                 
                 await ctx.send(gif_url)
             else:
-                await ctx.send("Không tìm thấy hình ảnh hoặc GIF nào khớp với keyword")
+                await ctx.send("Không tìm thấy hình ảnh hoặc GIF nào khớp với keyword.")
         else:
-            await ctx.send("Lỗi khi tìm kiếm GIF")
+            await ctx.send("Lỗi khi tìm kiếm GIF.")
     except Exception as e:
         await ctx.send(f"Đã xảy ra lỗi: {e}")
