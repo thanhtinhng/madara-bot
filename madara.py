@@ -7,6 +7,7 @@ import message_res
 from text_to_speech import speak
 import music_player
 import welcome_message
+from media_search import search_and_send_gif
 
 def run_bot():
     load_dotenv()
@@ -55,5 +56,9 @@ def run_bot():
     @client.command(name="s")
     async def speak_command(ctx, *, text: str):
         await speak(ctx, text=text)
+        
+    @client.command(name="gif", aliases=["g"])
+    async def img_command(ctx, *, query: str):
+        await search_and_send_gif(ctx, query)
 
     client.run(TOKEN)

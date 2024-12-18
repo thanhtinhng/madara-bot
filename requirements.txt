@@ -6,3 +6,4 @@ PyNaCl
 asyncio
 audioop-lts
 pydub
+requests
