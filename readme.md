@@ -76,8 +76,8 @@ python bot.py
 Khi bot đã online trên server Discord của bạn, sử dụng các lệnh với prefix ;
 
 #### Ví dụ:
-;play Never Gonna Give You Up - Phát nhạc từ YouTube.  
-;gif happy - Tìm kiếm và gửi một GIF liên quan đến từ "happy".
+`;play Never Gonna Give You Up` - Phát nhạc từ YouTube.  
+`;gif happy` - Tìm kiếm và gửi một GIF liên quan đến từ "happy".
 
 ---
 
