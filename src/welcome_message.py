@@ -42,7 +42,7 @@ async def send_welcome_message(client):
             # file=discord.File(image_path)
         ) 
         
-        query = "uchiha madara"
+        query = "madara"
         gif_url = get_random_gif_url(query, 1)
         if gif_url:
             await channel.send(gif_url)
