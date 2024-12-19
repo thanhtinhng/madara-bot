@@ -59,8 +59,12 @@ def run_bot():
         await speak(ctx, text=text)
         
     @client.command(name="gif", aliases=["g"])
-    async def img_command(ctx, *, query: str):
-        await search_and_send_gif(ctx, query)
+    async def gif_command(ctx, *, query: str):
+        await search_and_send_gif(ctx, query, 1)
+        
+    @client.command(name="norgif", aliases=["ng"])
+    async def norgif_command(ctx, *, query: str):
+        await search_and_send_gif(ctx, query, 0)
         
     @client.command(name="help", aliases=["h"])
     async def help_command(ctx):

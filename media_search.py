@@ -2,27 +2,31 @@ import os
 import requests
 import random
 
-async def search_and_send_gif(ctx, query):
+def get_random_gif_url(query, isAnime):
     """
-    Tìm kiếm GIF từ Tenor API, tùy thuộc vào độ dài từ khóa, và gửi ngẫu nhiên một GIF vào Discord.
+    Tìm kiếm GIF từ Tenor API, tùy thuộc vào độ dài từ khóa, và trả về một URL GIF ngẫu nhiên.
     """
-    finalQuery = "anime" + " " + query
+    
+    finalQuery = query
+    if isAnime:
+        finalQuery = "anime" + " " + query
+    
     try:
         # Xác định số lượng GIF cần lấy dựa trên số từ trong từ khóa
-        num_words = len(query.split())
+        num_words = len(finalQuery.split())
         if num_words == 2:
-            limit = 13
+            limit = 12
         elif num_words == 3:
-            limit = 6
+            limit = 7
         elif num_words >= 4:
-            limit = 4
+            limit = 5
         else:
-            limit = 10  # Mặc định khi từ khóa không đủ điều kiện
+            limit = 9  # Mặc định khi từ khóa không đủ điều kiện
 
         # API URL với số lượng GIF lấy về dựa trên `limit`
         TENOR_API_KEY = os.getenv('tenor_api_key')
         TENOR_API_URL = f"https://tenor.googleapis.com/v2/search?q={finalQuery}&key={TENOR_API_KEY}&limit={limit}"
-        
+
         response = requests.get(TENOR_API_URL)
         if response.status_code == 200:
             data = response.json()
@@ -31,13 +35,22 @@ async def search_and_send_gif(ctx, query):
                 # Chọn ngẫu nhiên một GIF từ danh sách kết quả
                 random_gif = random.choice(results)
                 gif_url = random_gif["media_formats"]["gif"]["url"]
-                
-                print(f"Selected GIF URL: {gif_url}")
-                
-                await ctx.send(gif_url)
+                print(f'Random in {limit} - Selected GIF URL: {gif_url}')
+                return gif_url
             else:
-                await ctx.send("Không tìm thấy hình ảnh hoặc GIF nào khớp với keyword.")
+                raise ValueError("Không tìm thấy GIF nào khớp với từ khóa.")
         else:
-            await ctx.send("Lỗi khi tìm kiếm GIF.")
+            raise Exception("Lỗi khi tìm kiếm GIF.")
     except Exception as e:
-        await ctx.send(f"Đã xảy ra lỗi: {e}")
+        print(f"Đã xảy ra lỗi: {e}")
+        return None
+
+async def search_and_send_gif(ctx, query, isAnime):
+    """
+    Command gửi GIF vào Discord, lấy URL từ hàm `get_random_gif_url`.
+    """
+    gif_url = get_random_gif_url(query, isAnime)
+    if gif_url:
+        await ctx.send(gif_url)
+    else:
+        await ctx.send("Không tìm thấy GIF nào.")

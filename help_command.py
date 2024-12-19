@@ -38,7 +38,8 @@ async def send_help_message(ctx):
     embed.add_field(
         name="🖼️ **GIF**\n",
         value=(
-            "`;gif` hoặc `;g` - Gửi GIF với từ khóa (GIF Anime)\n\n\n"
+            "`;gif` hoặc `;g` - Gửi GIF với từ khóa (GIF Anime)\n"
+            "`;norgif` hoặc `;ng` - Gửi GIF với từ khóa (GIF Thường)\n"
         ),
         inline=False
     )
