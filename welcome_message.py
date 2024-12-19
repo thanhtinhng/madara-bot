@@ -1,4 +1,5 @@
 import discord
+from media_search import get_random_gif_url
 
 async def send_welcome_message(client):
     print(f'{client.user} is now jamming')
@@ -38,5 +39,10 @@ async def send_welcome_message(client):
             "*Madara bước đi, tuyết bay theo từng bước chân:*\n"
             "Chuẩn bị đi... Giáng Sinh năm nay sẽ không còn vui nữa đâu, "
             "vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới. 🎅\n",
-            file=discord.File(image_path)
+            # file=discord.File(image_path)
         ) 
+        
+        query = "uchiha madara"
+        gif_url = get_random_gif_url(query, 1)
+        if gif_url:
+            await channel.send(gif_url)
