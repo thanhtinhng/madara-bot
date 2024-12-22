@@ -33,7 +33,7 @@ async def play_next(ctx):
     else:
         # Đặt timeout ngắt kết nối sau 10 phút nếu không còn bài trong hàng đợi
         if ctx.guild.id in voice_clients:
-            await ctx.send("Không còn bài hát nào nữa, ta sẽ rời đi trong 10 phút")
+            await ctx.send("Không còn bài hát nào nữa, nếu không còn ai trong kênh ta sẽ rời đi")
             await ctx.send("<:fern_chiu_kho:1300984467363463309>")
             timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
 
@@ -47,7 +47,19 @@ async def disconnect_after_timeout(ctx):
             del voice_clients[ctx.guild.id]
             await ctx.send("Madara đã rời đi vì không còn gì để hát.")
             
+# Biến kiểm soát trạng thái của bot
+busy_guilds = {}  # Đánh dấu đang xử lý lệnh play
+            
 async def play(ctx, *, link):
+    
+    # Nếu bot đang bận, từ chối lệnh mới
+    if ctx.guild.id in busy_guilds and busy_guilds[ctx.guild.id]:
+        await ctx.send("Từ từ ta đang chuẩn bị nhạc. <:fern_khinh_bi:1300983783016759387> \nĐi đâu mà vội mà vàng mà vấp phải đá mà quàng phải dây")
+        return
+    
+    # Đánh dấu server là đang bận
+    busy_guilds[ctx.guild.id] = True
+    
     # Kiểm tra nếu có timeout, hủy timeout khi có bài hát mới
     if ctx.guild.id in timeouts and not timeouts[ctx.guild.id].done():
         timeouts[ctx.guild.id].cancel()
@@ -64,6 +76,7 @@ async def play(ctx, *, link):
         queues[ctx.guild.id].append(link)
         await ctx.send("Ok Madara sẽ hát bài này tiếp theo")
         await ctx.send("<:okgua:928320383503990804>")
+        busy_guilds[ctx.guild.id] = False  # Cho phép lệnh mới sau khi thêm vào queue
         return
 
     # Phát nhạc ngay lập tức nếu không có bài nào đang phát
@@ -88,8 +101,14 @@ async def play(ctx, *, link):
             ) if e is None else print(f'Player error: {e}' if e else '')
         )
         await ctx.send(f"Madara bắt đầu hát: {data['title']} <:oooo:926061449116258314>")  # Gửi tin nhắn bài hát hiện tại
+    
     except Exception as e:
         print(e)
+        await ctx.send("Không tìm thấy bài hát hoặc có lỗi xảy ra <:huhu:983738982678540298>")
+        
+    finally:
+        # Đánh dấu hoàn thành và cho phép lệnh mới
+        busy_guilds[ctx.guild.id] = False
 
 # @client.command(name="clear_queue")
 # async def clear_queue(ctx):
