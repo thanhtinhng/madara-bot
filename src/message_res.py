@@ -32,6 +32,9 @@ async def on_message(client, message):
     if any(word in words for word in ["noel", "giáng sinh"]):
         await message.channel.send(file=discord.File('./img/sau.gif'))
         
+    if any(word in words for word in ["t1", "faker"]):
+        await message.channel.send(file=discord.File('./img/faker-league-of-legends.gif'))
+        
     if any(word in words for word in ["tanjiro", "tân", "tânjiro"]):
         await message.channel.send("Tânjiro Là kẻ nào. Ta muốn tỉ thí với Tânjiro <:caideogitheOriginalversion:953853117802369136>")
 
