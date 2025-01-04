@@ -22,9 +22,9 @@ def run_bot():
     client = commands.Bot(command_prefix=";", intents=intents, help_command=None)
     music_player.set_client(client)
     
-    # @client.event
-    # async def on_ready():
-    #     await welcome_message.send_welcome_message(client)
+    @client.event
+    async def on_ready():
+        await welcome_message.send_welcome_message(client)
     
     @client.command(name="play", aliases=["p"])
     async def play_command(ctx, *, query):
