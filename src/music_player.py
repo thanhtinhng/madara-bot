@@ -11,7 +11,7 @@ youtube_watch_url = youtube_base_url + 'watch?v='
 yt_dl_options = {"format": "bestaudio/best", "age_limit": 0,}
 ytdl = yt_dlp.YoutubeDL(yt_dl_options)
 
-ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn -filter:a "volume=0.5"'}
+ffmpeg_options = ffmpeg_options = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5','options': '-vn -filter:a "volume=0.70"'}
 
 timeouts = {}
 
@@ -66,6 +66,12 @@ async def play(ctx, *, link):
         await ctx.send("Hừm, có bài hát mới à? Ta sẽ ở lại thêm chút nữa")
         await ctx.send("<:fern_khinh_bi:1300983783016759387>")
         
+    # Kiểm tra nếu người dùng không ở trong kênh thoại
+    if not ctx.author.voice or not ctx.author.voice.channel:
+        await ctx.send("Ngươi phải vào kênh thoại trước khi yêu cầu nhạc <:fern_khinh_bi:1300983783016759387>")
+        busy_guilds[ctx.guild.id] = False  # Đảm bảo bot không bị kẹt ở trạng thái busy
+        return
+    
     # Kiểm tra nếu bot chưa tham gia kênh thoại
     if ctx.guild.id not in voice_clients or not voice_clients[ctx.guild.id].is_connected():
         voice_client = await ctx.author.voice.channel.connect()
@@ -105,6 +111,7 @@ async def play(ctx, *, link):
     except Exception as e:
         print(e)
         await ctx.send("Không tìm thấy bài hát hoặc có lỗi xảy ra <:huhu:983738982678540298>")
+        busy_guilds[ctx.guild.id] = False  # Reset trạng thái busy nếu gặp lỗi
         
     finally:
         # Đánh dấu hoàn thành và cho phép lệnh mới
