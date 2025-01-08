@@ -38,7 +38,7 @@ async def play_next(ctx):
             timeouts[ctx.guild.id] = asyncio.create_task(disconnect_after_timeout(ctx))
 
 async def disconnect_after_timeout(ctx):
-    await asyncio.sleep(600)  # Đợi 10 phút
+    await asyncio.sleep(1000)  # Đợi 
     # Kiểm tra số lượng người dùng trong kênh, nếu chỉ còn bot thì mới ngắt kết nối
     voice_channel = ctx.guild.get_channel(voice_clients[ctx.guild.id].channel.id)
     if voice_channel and len(voice_channel.members) == 1:  # Chỉ có bot

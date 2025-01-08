@@ -1,5 +1,8 @@
 import discord
 from media_search import get_random_gif_url
+from help_command import send_help_message
+from discord.ext import commands
+from discord.ui import Button, View
 
 async def send_welcome_message(client):
     print(f'{client.user} is now jamming')
@@ -21,7 +24,7 @@ async def send_welcome_message(client):
             "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
             "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
         )
-    
+
     # if channel:
     #     image_path = './img/xmas.jpg'
         
@@ -49,3 +52,17 @@ async def send_welcome_message(client):
         gif_url = get_random_gif_url(query, 1)
         if gif_url:
             await channel.send(gif_url)
+            
+        # Tạo nút bấm để hiển thị danh sách lệnh
+        button = Button(label="Ấn vào đây để hiển thị danh sách lệnh", style=discord.ButtonStyle.primary)
+
+        async def button_callback(interaction):
+            await send_help_message(interaction)
+
+        button.callback = button_callback
+
+        view = View()
+        view.add_item(button)
+
+        # Gửi lời chào kèm nút bấm
+        await channel.send(view=view)
