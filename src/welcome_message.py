@@ -3,6 +3,7 @@ from media_search import get_random_gif_url
 from help_command import send_help_message
 from discord.ext import commands
 from discord.ui import Button, View
+from help_btn import PersistentView
 
 async def send_welcome_message(client):
     print(f'{client.user} is now jamming')
@@ -48,21 +49,28 @@ async def send_welcome_message(client):
     #         # file=discord.File(image_path)
     #     ) 
         
-        query = "madara"
-        gif_url = get_random_gif_url(query, 1)
+        query = "uchiha madara"
+        gif_url = get_random_gif_url(query, 0)
         if gif_url:
             await channel.send(gif_url)
             
-        # Tạo nút bấm để hiển thị danh sách lệnh
-        button = Button(label="Ấn vào đây để hiển thị danh sách lệnh", style=discord.ButtonStyle.primary)
-
-        async def button_callback(interaction):
-            await send_help_message(interaction)
-
-        button.callback = button_callback
-
-        view = View()
-        view.add_item(button)
-
-        # Gửi lời chào kèm nút bấm
+        # nút bấm để hiển thị danh sách lệnh
+            
+        view=PersistentView()
         await channel.send(view=view)
+            
+        # nút bấm để hiển thị danh sách lệnh
+            
+        # # Tạo View lần đầu
+        # view = View(timeout=3600)
+        # button = Button(label="Ấn vào đây để hiển thị danh sách lệnh", style=discord.ButtonStyle.primary)
+
+        # async def button_callback(interaction):
+        #     await send_help_message(interaction)
+
+        # button.callback = button_callback
+
+        # view.add_item(button)
+
+        # # Gửi lời chào kèm nút bấm
+        # await channel.send(view=view)
