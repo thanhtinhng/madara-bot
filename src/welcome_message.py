@@ -20,8 +20,8 @@ async def send_welcome_message(client):
             f"*{obito.mention} thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
             "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
             "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-            "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế gian này, "
-            "nhẫn giả này, sẽ lại run rẩy trước sức mạnh chân chính của Uchiha!\"\n\n"
+            "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế giới "
+            "nhẫn giả này sẽ lại run rẩy trước sức mạnh của Uchiha một lần nữa!\"\n\n"
             "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
             "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
         )
@@ -58,6 +58,8 @@ async def send_welcome_message(client):
             
         view=PersistentView()
         await channel.send(view=view)
+        
+        await channel.send('(Chỉ hoạt động khi Madara đang online)')
             
         # nút bấm để hiển thị danh sách lệnh
             
