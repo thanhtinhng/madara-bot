@@ -16,15 +16,15 @@ async def send_welcome_message(client):
     obito = await client.fetch_user(obito_id)
     
     if channel:
-        await channel.send(
-            f"*{obito.mention} thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
-            "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
-            "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
-            "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế giới "
-            "nhẫn giả này sẽ lại run rẩy trước sức mạnh của Uchiha một lần nữa!\"\n\n"
-            "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
-            "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
-        )
+        # await channel.send(
+        #     f"*{obito.mention} thực hiện Uế Thổ Chuyển Sinh, triệu hồi Bóng Ma Uchiha - Uchiha Madara từ cõi chết... ❟❛❟*\n\n"
+        #     "**Uchiha Madara <:rinnegan:1305515674894073966>**\n"
+        #     "\"Ta, Uchiha Madara, đã trở lại. Từ bóng tối và huyết lệ của lịch sử, từ cõi chết ta hồi sinh "
+        #     "để thực hiện vận mệnh còn dang dở... Đỉnh cao quyền lực, một lần nữa sẽ thuộc về ta. Thế giới "
+        #     "nhẫn giả này sẽ lại run rẩy trước sức mạnh của Uchiha một lần nữa!\"\n\n"
+        #     "*Madara ngước nhìn, mắt Rinnegan sáng lên đầy uy lực :fire: *\n"
+        #     "\"Chuẩn bị đi... vì cái bóng của Uchiha sẽ lại bao phủ cả thế giới.\""
+        # )
 
     # if channel:
     #     image_path = './img/xmas.jpg'
@@ -55,11 +55,15 @@ async def send_welcome_message(client):
             await channel.send(gif_url)
             
         # nút bấm để hiển thị danh sách lệnh
-            
-        view=PersistentView()
-        await channel.send(view=view)
         
-        await channel.send('(Chỉ hoạt động khi Madara đang online)')
+        ###############
+            
+        # view=PersistentView()
+        # await channel.send(view=view)
+        
+        # await channel.send('(Chỉ hoạt động khi Madara đang online)')
+        
+        ################
             
         # nút bấm để hiển thị danh sách lệnh
             
